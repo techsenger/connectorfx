@@ -194,6 +194,10 @@ final class WindowMonitor {
         selectedNode = null;
         attributeListener.setTarget(null);
         highlightOpts = HighlightOptions.defaults();
+        // reset all highlight regions to size 0 and make them invisible
+        boundsPane.toggleLayoutBoundsDisplay(null);
+        boundsPane.toggleBoundsInParentDisplay(null);
+        boundsPane.toggleBaselineDisplay(null);
         boundsPane.detach();
     }
 
