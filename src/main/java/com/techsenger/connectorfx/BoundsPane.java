@@ -76,6 +76,10 @@ final class BoundsPane {
         }
     }
 
+    public boolean isAttached() {
+        return this.parent != null;
+    }
+
     /**
      * Updates the properties of the layoutBounds rectangle to set or remove the highlight
      * for the specified target node. If the target node is null the current selection will

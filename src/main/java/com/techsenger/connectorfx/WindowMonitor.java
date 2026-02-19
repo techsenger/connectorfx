@@ -50,6 +50,8 @@ final class WindowMonitor {
     private final EventBus eventBus;
     private final EventSource eventSource;
 
+    private @Nullable Parent root;
+
     // highlighting
     private final BoundsPane boundsPane;
     private final InspectPane inspectPane;
@@ -167,6 +169,9 @@ final class WindowMonitor {
         if (node == null) {
             clearSelection();
             return;
+        }
+        if (!this.boundsPane.isAttached() && this.root != null) {
+            this.boundsPane.attach(root);
         }
 
         highlightOpts = Objects.requireNonNullElse(opts, HighlightOptions.defaults());
@@ -442,7 +447,7 @@ final class WindowMonitor {
             SceneUtils.addEventFilter(newRoot, MouseEvent.MOUSE_PRESSED, mousePressSelectFilter);
             SceneUtils.addToNode(newRoot, inspectPane);
         }
-
+        this.root = newRoot;
         boundsPane.attach(newRoot);
         notifyRootChanged(newRoot);
     }
