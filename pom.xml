@@ -47,8 +47,8 @@
     </developers>
 
      <properties>
-        <maven.compiler.release>25</maven.compiler.release>
-        <javafx.version>25.0.1</javafx.version>
+        <maven.compiler.release>21</maven.compiler.release>
+        <javafx.version>23</javafx.version>
         <jspecify.version>1.0.0</jspecify.version>
      </properties>
 
