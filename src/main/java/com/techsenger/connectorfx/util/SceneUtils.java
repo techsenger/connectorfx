@@ -3,7 +3,6 @@ package com.techsenger.connectorfx.util;
 import com.techsenger.connectorfx.ConnectorOptions;
 import com.techsenger.connectorfx.LocalElement;
 import com.techsenger.connectorfx.scenegraph.Element;
-import java.lang.System.Logger.Level;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -29,6 +28,8 @@ import javafx.scene.layout.Region;
 import javafx.stage.Window;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A set of utility methods to work with scene's nodes.
@@ -36,7 +37,7 @@ import org.jspecify.annotations.Nullable;
 @NullMarked
 public final class SceneUtils {
 
-    private static final System.Logger LOGGER = System.getLogger(SceneUtils.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(SceneUtils.class);
 
     /**
      * Returns the given node unique ID. Basically, it's just a hash code.
@@ -283,7 +284,7 @@ public final class SceneUtils {
         if (node != null) {
             obs.apply(node).addListener(listener);
         } else {
-            LOGGER.log(Level.INFO, "node is null, this behavior is probably not expected");
+            logger.info("node is null, this behavior is probably not expected");
         }
     }
 
@@ -296,7 +297,7 @@ public final class SceneUtils {
         if (node != null) {
             obs.apply(node).removeListener(listener);
         } else {
-            LOGGER.log(Level.INFO, "node is null, this behavior is probably not expected");
+            logger.info("node is null, this behavior is probably not expected");
         }
     }
 
@@ -309,7 +310,7 @@ public final class SceneUtils {
         if (node != null) {
             obs.apply(node).addListener(listener);
         } else {
-            LOGGER.log(Level.INFO, "node is null, this behavior is probably not expected");
+            logger.info("node is null, this behavior is probably not expected");
         }
     }
 
@@ -322,7 +323,7 @@ public final class SceneUtils {
         if (node != null) {
             obs.apply(node).addListener(listener);
         } else {
-            LOGGER.log(Level.INFO, "node is null, this behavior is probably not expected");
+            logger.info("node is null, this behavior is probably not expected");
         }
     }
 
@@ -335,7 +336,7 @@ public final class SceneUtils {
         if (scene != null) {
             scene.addEventFilter(eventType, eventFilter);
         } else {
-            LOGGER.log(Level.INFO, "scene is null, this behavior is probably not expected");
+            logger.info("scene is null, this behavior is probably not expected");
         }
     }
 
@@ -348,7 +349,7 @@ public final class SceneUtils {
         if (scene != null) {
             scene.removeEventFilter(eventType, eventFilter);
         } else {
-            LOGGER.log(Level.INFO, "scene is null, this behavior is probably not expected");
+            logger.info("scene is null, this behavior is probably not expected");
         }
     }
 
@@ -361,7 +362,7 @@ public final class SceneUtils {
         if (parent != null) {
             parent.addEventFilter(eventType, eventFilter);
         } else {
-            LOGGER.log(Level.INFO, "parent is null, this behavior is probably not expected");
+            logger.info("parent is null, this behavior is probably not expected");
         }
     }
 
@@ -374,7 +375,7 @@ public final class SceneUtils {
         if (parent != null) {
             parent.removeEventFilter(eventType, eventFilter);
         } else {
-            LOGGER.log(Level.INFO, "parent is null, this behavior is probably not expected");
+            logger.info("parent is null, this behavior is probably not expected");
         }
     }
 

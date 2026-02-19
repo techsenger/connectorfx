@@ -1,16 +1,16 @@
 package com.techsenger.connectorfx.scenegraph.attributes;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ObservableValue;
-import org.jspecify.annotations.NullMarked;
-
-import java.lang.System.Logger.Level;
 import java.lang.reflect.InaccessibleObjectException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ObservableValue;
+import org.jspecify.annotations.NullMarked;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The property listener accepts the target node, reflectively scans all its
@@ -23,7 +23,7 @@ import java.util.Map;
 @NullMarked
 public abstract class PropertyListener {
 
-    private static final System.Logger LOGGER = System.getLogger(PropertyListener.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(PropertyListener.class);
     public static final String PROPERTY_SUFFIX = "Property";
 
     private final Map<ObservableValue<?>, String> properties = new HashMap<>();
@@ -64,7 +64,7 @@ public abstract class PropertyListener {
                 try {
                     method.setAccessible(true);
                 } catch (InaccessibleObjectException e) {
-                    LOGGER.log(Level.INFO, e.getMessage());
+                    logger.info(e.getMessage());
                 }
 
                 ObservableValue<?> property = (ObservableValue<?>) method.invoke(target);

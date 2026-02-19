@@ -8,8 +8,6 @@ import com.techsenger.connectorfx.scenegraph.Element;
 import com.techsenger.connectorfx.scenegraph.WindowProperties;
 import com.techsenger.connectorfx.scenegraph.attributes.AttributeCategory;
 import com.techsenger.connectorfx.util.SceneUtils;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -28,6 +26,8 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements the {@link Connector} interface for local (this JVM process) nodes.
@@ -36,7 +36,7 @@ import org.jspecify.annotations.Nullable;
 @NullMarked
 public final class LocalConnector implements Connector {
 
-    private static final Logger LOGGER = System.getLogger(LocalConnector.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(LocalConnector.class);
 
     private final String application;
     private final ConnectorOptions opts;
@@ -95,7 +95,7 @@ public final class LocalConnector implements Connector {
 
         monitors.forEach((hash, monitor) -> monitor.start());
         Window.getWindows().addListener(windowListChangeListener);
-        LOGGER.log(Level.INFO, "LocalConnector started");
+        logger.info("LocalConnector started");
     }
 
     @Override
@@ -104,7 +104,7 @@ public final class LocalConnector implements Connector {
 
         monitors.forEach((hash, monitor) -> monitor.stop());
         Window.getWindows().removeListener(windowListChangeListener);
-        LOGGER.log(Level.INFO, "LocalConnector stopped");
+        logger.info("LocalConnector stopped");
     }
 
     @Override
@@ -138,7 +138,7 @@ public final class LocalConnector implements Connector {
         if (monitor != null) {
             monitor.selectWindow();
         } else {
-            LOGGER.log(Level.WARNING, "Unable to select window: unknown window UID");
+            logger.warn("Unable to select window: unknown window UID");
         }
     }
 
@@ -150,10 +150,10 @@ public final class LocalConnector implements Connector {
             if (node != null) {
                 monitor.selectNode(node, Objects.requireNonNullElse(opts, HighlightOptions.defaults()));
             } else {
-                LOGGER.log(Level.WARNING, "Unable to select element: unknown node");
+                logger.warn("Unable to select element: unknown node");
             }
         } else {
-            LOGGER.log(Level.WARNING, "Unable to select element: unknown window UID");
+            logger.warn("Unable to select element: unknown window UID");
         }
     }
 
@@ -163,7 +163,7 @@ public final class LocalConnector implements Connector {
         if (monitor != null) {
             monitor.clearSelection();
         } else {
-            LOGGER.log(Level.WARNING, "Unable to clear selection: unknown window UID");
+            logger.warn("Unable to clear selection: unknown window UID");
         }
     }
 
@@ -175,7 +175,7 @@ public final class LocalConnector implements Connector {
         if (monitor != null) {
             monitor.reloadSelectedAttributes(category, property);
         } else {
-            LOGGER.log(Level.WARNING, "Unable to reload attributes: unknown window UID");
+            logger.warn("Unable to reload attributes: unknown window UID");
         }
     }
 
@@ -300,7 +300,7 @@ public final class LocalConnector implements Connector {
 
         // guard block, should never happen
         if (monitors.containsKey(uid)) {
-            LOGGER.log(Level.ERROR, "Attempting to add a new window that already has a bound monitor object");
+            logger.error("Attempting to add a new window that already has a bound monitor object");
             monitors.remove(uid);
             handleWindowAdd(window);
         }

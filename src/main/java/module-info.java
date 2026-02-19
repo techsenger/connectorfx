@@ -2,6 +2,7 @@ module com.techsenger.connectorfx {
 
     requires javafx.controls;
     requires static org.jspecify;
+    requires org.slf4j;
 
     exports com.techsenger.connectorfx;
     exports com.techsenger.connectorfx.event;

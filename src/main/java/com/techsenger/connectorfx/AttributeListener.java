@@ -4,13 +4,13 @@ import com.techsenger.connectorfx.event.EventBus;
 import com.techsenger.connectorfx.event.EventSource;
 import com.techsenger.connectorfx.scenegraph.attributes.AttributeCategory;
 import com.techsenger.connectorfx.scenegraph.attributes.Tracker;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.stream.Collectors;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Listens for all types of attributes for the given target.
@@ -18,7 +18,7 @@ import org.jspecify.annotations.Nullable;
 @NullMarked
 final class AttributeListener {
 
-    private static final Logger LOGGER = System.getLogger(AttributeListener.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(AttributeListener.class);
 
     private final EnumMap<AttributeCategory, Tracker> trackers;
     private @Nullable Object target;
@@ -31,7 +31,7 @@ final class AttributeListener {
                 Tracker::getCategory,
                 tracker -> tracker,
                 (l, r) -> {
-                    LOGGER.log(Level.WARNING, "duplicate keys " + l.getCategory() + " and " + r.getCategory());
+                    logger.warn("duplicate keys {} and {}", l.getCategory(), r.getCategory());
                     return l;
                 },
                 () -> new EnumMap<>(AttributeCategory.class)

@@ -1,17 +1,14 @@
 package com.techsenger.connectorfx.event;
 
-import com.techsenger.connectorfx.LocalConnector;
-import javafx.application.Platform;
-import org.jspecify.annotations.NullMarked;
-
-import java.lang.System.Logger;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.function.Consumer;
-
-import static java.lang.System.Logger.Level;
+import javafx.application.Platform;
+import org.jspecify.annotations.NullMarked;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A straightforward event bus implementation. Events are published in channels
@@ -20,7 +17,7 @@ import static java.lang.System.Logger.Level;
 @NullMarked
 public final class EventBus {
 
-    private static final Logger LOGGER = System.getLogger(LocalConnector.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(EventBus.class);
 
     private final Map<Class<?>, Set<Consumer<?>>> subscribers = new ConcurrentHashMap<>();
 
@@ -71,11 +68,11 @@ public final class EventBus {
             if (Platform.isFxApplicationThread()) {
                 subscriber.accept(event);
             } else {
-                LOGGER.log(Level.WARNING, "Calling the event bus not from the FX thread");
+                logger.warn("Calling the event bus not from the FX thread");
                 Platform.runLater(() -> subscriber.accept(event));
             }
         } catch (Exception e) {
-            LOGGER.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 }

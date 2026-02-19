@@ -5,7 +5,6 @@ import com.techsenger.connectorfx.event.EventSource;
 import com.techsenger.connectorfx.scenegraph.attributes.Attribute.DisplayHint;
 import com.techsenger.connectorfx.scenegraph.attributes.Attribute.ObservableType;
 import com.techsenger.connectorfx.scenegraph.attributes.Attribute.ValueState;
-import java.lang.System.Logger.Level;
 import java.util.List;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -17,6 +16,8 @@ import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.shape.StrokeType;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The {@link Tracker} implementation for the {@link Shape} class.
@@ -24,7 +25,7 @@ import org.jspecify.annotations.Nullable;
 @NullMarked
 public final class ShapeTracker extends Tracker {
 
-    private static final System.Logger LOGGER = System.getLogger(ReflectiveTracker.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(ShapeTracker.class);
 
     public static final List<String> SUPPORTED_PROPERTIES = List.of(
         "fill", "smooth", "stroke", "strokeType", "strokeWidth", "strokeDashArray",
@@ -56,7 +57,7 @@ public final class ShapeTracker extends Tracker {
         return switch (property) {
             case "fill" -> {
                 if (shape.getFill() == null) {
-                    LOGGER.log(Level.WARNING, "[Error] null shape fill for node: " + getTarget());
+                    logger.warn("[Error] null shape fill for node: " + getTarget());
                 }
 
                 yield new Attribute<>(

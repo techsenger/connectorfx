@@ -1,8 +1,6 @@
 package com.techsenger.connectorfx;
 
 import com.techsenger.connectorfx.util.SceneUtils;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -14,6 +12,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Contains the logic to implement highlighting of arbitrary nodes within the given parent node.
@@ -24,7 +24,7 @@ import org.jspecify.annotations.Nullable;
 @NullMarked
 final class BoundsPane {
 
-    private static final Logger LOGGER = System.getLogger(BoundsPane.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(BoundsPane.class);
 
     private final Rectangle boundsInParentRect = createBoundsInParentRect();
     private final Rectangle layoutBoundsRect = createLayoutBoundsRect();
@@ -51,7 +51,7 @@ final class BoundsPane {
 
         if (parent == null) {
             if (candidate != null) {
-                LOGGER.log(Level.WARNING, "Could not find writable parent to add overlay nodes, overlay is disabled");
+                logger.warn("Could not find writable parent to add overlay nodes, overlay is disabled");
             }
 
             toggleLayoutBoundsDisplay(null);

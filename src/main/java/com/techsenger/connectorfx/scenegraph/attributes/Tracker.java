@@ -6,7 +6,6 @@ import com.techsenger.connectorfx.event.AttributeUpdatedEvent;
 import com.techsenger.connectorfx.event.EventBus;
 import com.techsenger.connectorfx.event.EventSource;
 import com.techsenger.connectorfx.event.ExceptionEvent;
-import java.lang.System.Logger;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +19,8 @@ import javafx.scene.Scene;
 import javafx.stage.Window;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The tracker is the base class for reading scene graph node properties and monitoring
@@ -49,7 +50,7 @@ public abstract sealed class Tracker permits
     TextTracker,
     WindowTracker {
 
-    private static final Logger LOGGER = System.getLogger(Tracker.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(Tracker.class);
 
     private final PropertyListener propertyListener = new PropertyListener() {
         @Override
@@ -224,7 +225,7 @@ public abstract sealed class Tracker permits
                         category, attributes)
             );
         } else if (target != null) {
-            LOGGER.log(Logger.Level.WARNING, "Unable to emit event: unknown object type '" + target.getClass() + "'");
+            logger.warn("Unable to emit event: unknown object type '{}'", target.getClass());
         }
     }
 
@@ -246,7 +247,7 @@ public abstract sealed class Tracker permits
                         category, attribute)
             );
         } else if (target != null) {
-            LOGGER.log(Logger.Level.WARNING, "Unable to emit event: unknown object type '" + target.getClass() + "'");
+            logger.warn("Unable to emit event: unknown object type '{}'", target.getClass());
         }
     }
 }
