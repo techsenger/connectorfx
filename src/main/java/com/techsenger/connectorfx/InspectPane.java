@@ -1,15 +1,14 @@
 package com.techsenger.connectorfx;
 
 import com.techsenger.connectorfx.util.ClassInfoCache;
+import com.techsenger.connectorfx.util.HighlightUtils;
 import java.text.DecimalFormat;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.stage.PopupWindow.AnchorLocation;
 import org.jspecify.annotations.NullMarked;
 
@@ -67,12 +66,13 @@ final class InspectPane extends Group {
             viewportBounds.setHeight(0);
         }
 
-        var curtain = Shape.subtract(rootBounds, viewportBounds);
-        curtain.setMouseTransparent(false);
-        curtain.setFill(Color.GREEN);
-        curtain.setOpacity(0.5);
-
-        getChildren().add(curtain);
+//        var curtain = Shape.subtract(rootBounds, viewportBounds);
+//        curtain.setMouseTransparent(false);
+//        curtain.setFill(Color.GREEN);
+//        curtain.setOpacity(0.5);
+//        getChildren().add(curtain);
+        viewportBounds.setMouseTransparent(true);
+        getChildren().add(viewportBounds);
 
         Point2D screenXY = node.localToScreen(
             node.getBoundsInLocal().getMinX(),
@@ -115,5 +115,14 @@ final class InspectPane extends Group {
             // UnsupportedOperationException when closing the monitored
             // window without disabling the inspect mode
         }
+    }
+
+    /**
+     * Applies the given highlight to the visual elements, updating the bounds highlights.
+     *
+     * @param inspectBounds
+     */
+    public void applyHighlight(Highlight.BoundsHighlight inspectBounds) {
+        HighlightUtils.updateBounds(inspectBounds, viewportBounds);
     }
 }

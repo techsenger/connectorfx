@@ -5,15 +5,14 @@ import com.techsenger.connectorfx.event.EventSource;
 import com.techsenger.connectorfx.scenegraph.Element;
 import com.techsenger.connectorfx.scenegraph.WindowProperties;
 import com.techsenger.connectorfx.scenegraph.attributes.AttributeCategory;
+import java.util.List;
+import java.util.Map;
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.scene.Parent;
 import javafx.scene.control.Control;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * The connector serves as the main entry point for application monitoring. It accepts
@@ -118,4 +117,18 @@ public interface Connector {
      */
     @Nullable
     String getDeclaringClass(String className, String property);
+
+    /**
+     * Sets the highlight configuration.
+     *
+     * @param highlight
+     */
+    void setHighlight(Highlight highlight);
+
+    /**
+     * Returns the highlight configuration.
+     *
+     * @return
+     */
+    Highlight getHighlight();
 }

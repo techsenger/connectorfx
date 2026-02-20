@@ -289,6 +289,11 @@ final class WindowMonitor {
         return getScene() != null ? getScene().getRoot() : null;
     }
 
+    public void applyHighlight(Highlight h) {
+        this.boundsPane.applyHighlight(h.getLayoutBounds(), h.getBoundsInParent(), h.getBaseline());
+        this.inspectPane.applyHighlight(h.getInspectBounds());
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Listeners                                                             //
     ///////////////////////////////////////////////////////////////////////////

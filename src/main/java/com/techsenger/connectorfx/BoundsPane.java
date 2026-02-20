@@ -1,15 +1,16 @@
 package com.techsenger.connectorfx;
 
+import com.techsenger.connectorfx.Highlight.BaselineHighlight;
+import com.techsenger.connectorfx.Highlight.BoundsHighlight;
+import com.techsenger.connectorfx.util.HighlightUtils;
 import com.techsenger.connectorfx.util.SceneUtils;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
@@ -184,6 +185,21 @@ final class BoundsPane {
         }
     }
 
+    /**
+     * Applies the given highlights to the visual elements, updating the layout bounds, bounds-in-parent,
+     * and baseline highlights accordingly.
+     *
+     * @param layoutBounds
+     * @param inParentBounds
+     * @param baselineBounds
+     */
+    public void applyHighlight(BoundsHighlight layoutBounds, BoundsHighlight inParentBounds,
+            BaselineHighlight baselineBounds) {
+        HighlightUtils.updateBounds(layoutBounds, layoutBoundsRect);
+        HighlightUtils.updateBounds(inParentBounds, boundsInParentRect);
+        HighlightUtils.updateBaseline(baselineBounds, baselineStroke);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
 
     /**
@@ -193,12 +209,6 @@ final class BoundsPane {
     private Rectangle createBoundsInParentRect() {
         var r = new Rectangle();
         r.setId(ConnectorOptions.AUX_NODE_ID_PREFIX + "layoutBoundsRect");
-        r.setFill(null);
-        r.setStroke(Color.GREEN);
-        r.setStrokeType(StrokeType.INSIDE);
-        r.setOpacity(0.8);
-        r.getStrokeDashArray().addAll(3.0, 3.0);
-        r.setStrokeWidth(1);
         r.setManaged(false);
         r.setMouseTransparent(true);
         return r;
@@ -211,8 +221,6 @@ final class BoundsPane {
     private Rectangle createLayoutBoundsRect() {
         var r = new Rectangle();
         r.setId(ConnectorOptions.AUX_NODE_ID_PREFIX + "boundsInParentRect");
-        r.setFill(Color.YELLOW);
-        r.setOpacity(0.5);
         r.setManaged(false);
         r.setMouseTransparent(true);
         return r;
@@ -225,9 +233,6 @@ final class BoundsPane {
     private Line createBaselineStroke() {
         var l = new Line();
         l.setId(ConnectorOptions.AUX_NODE_ID_PREFIX + "baselineLine");
-        l.setStroke(Color.RED);
-        l.setOpacity(.75);
-        l.setStrokeWidth(1);
         l.setManaged(false);
         return l;
     }

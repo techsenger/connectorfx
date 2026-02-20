@@ -48,6 +48,8 @@ public final class LocalConnector implements Connector {
     private final ListChangeListener<Window> windowListChangeListener = this::onWindowListChanged;
     private final ReadOnlyBooleanWrapper started = new ReadOnlyBooleanWrapper();
 
+    private Highlight highlight = Highlight.defaults();
+
     /**
      * See {@link LocalConnector#(Stage, ConnectorOptions , String)}.
      */
@@ -234,6 +236,19 @@ public final class LocalConnector implements Connector {
         }
     }
 
+    @Override
+    public void setHighlight(Highlight highlight) {
+        this.highlight = highlight;
+        this.monitors.values().forEach(m -> m.applyHighlight(highlight));
+    }
+
+    @Override
+    public Highlight getHighlight() {
+        return this.highlight;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+
     private @Nullable Class<?> getDeclaringClass(Class<?> cls, String method) {
         try {
             cls.getDeclaredMethod(method);
@@ -247,8 +262,6 @@ public final class LocalConnector implements Connector {
 
         return null;
     }
-
-    ///////////////////////////////////////////////////////////////////////////
 
     /**
      * Instantiates a new {@link WindowMonitor}.
@@ -268,7 +281,9 @@ public final class LocalConnector implements Connector {
         }
 
         var eventSource = new EventSource(app, uid, isPrimaryStage);
-        return new WindowMonitor(window, opts, eventBus, eventSource);
+        var monitor = new WindowMonitor(window, opts, eventBus, eventSource);
+        monitor.applyHighlight(highlight);
+        return monitor;
     }
 
     /**
