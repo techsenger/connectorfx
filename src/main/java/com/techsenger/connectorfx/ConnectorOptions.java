@@ -12,7 +12,7 @@ import org.jspecify.annotations.NullMarked;
 @NullMarked
 public final class ConnectorOptions {
 
-    public static final String AUX_NODE_ID_PREFIX = "devtoolsfx.";
+    public static final String AUX_NODE_ID_PREFIX = "connectorfx.";
 
     private final BooleanProperty ignoreMouseTransparent = new SimpleBooleanProperty(false);
     private final BooleanProperty inspectMode = new SimpleBooleanProperty(false);
